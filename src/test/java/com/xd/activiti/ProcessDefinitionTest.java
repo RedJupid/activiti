@@ -188,10 +188,20 @@ public class ProcessDefinitionTest {
     /** 查询当前人的个人任务*/
     @Test
     public void findMyPersonalTask(){
-        String assignee = "王五";
+        String assignee = "张三";
         List<Task> list = taskService.createTaskQuery()// 创建任务查询对象
                 .taskAssignee(assignee)// 指定个人任务查询，指定办理人
+//                .taskCandidateUser()// 组任务的办理人查询
+//                .processDefinitionId()// 使用流程定义ID查询
+//                .processInstanceId()// 使用执行对象ID查询
+//                .executionId()// 使用执行对象ID查询
+                /** 排序*/
+                .orderByTaskCreateTime().asc()// 使用创建时间的升序排序
+                /** 返回结果集*/
                 .list();
+//                .singleResult();// 返回唯一结果集
+//                .count();// 返回结果集数量
+//                .listPage(firstResult, maxResult);// 分页查询
         if(list != null && list.size()>0){
             for (Task task : list){
                 System.out.println("任务ID:"+task.getId());
@@ -208,7 +218,7 @@ public class ProcessDefinitionTest {
     /** 完成我的任务 */
     @Test
     public void completeMyPersonalTask(){
-        String taskId = "62025d1e-414d-11e9-87b7-8cec4b862f6e";
+        String taskId = "c4abe724-4175-11e9-9efe-8cec4b862f6e";
         taskService.complete(taskId);
         System.out.println("完成任务：任务ID"+taskId);
     }
