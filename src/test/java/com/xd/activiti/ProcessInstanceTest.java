@@ -4,6 +4,8 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -75,5 +77,89 @@ public class ProcessInstanceTest {
         System.out.println("流程定义ID:"+processInstance.getProcessDefinitionId());//流程定义ID
     }
 
+    /** 查询当前人的个人任务*/
+    @Test
+    public void findMyPersonalTask(){
+        String assignee = "张三";
+        List<Task> list = taskService.createTaskQuery()// 创建任务查询对象
+                .taskAssignee(assignee)// 指定个人任务查询，指定办理人
+//                .taskCandidateUser()// 组任务的办理人查询
+//                .processDefinitionId()// 使用流程定义ID查询
+//                .processInstanceId()// 使用执行对象ID查询
+//                .executionId()// 使用执行对象ID查询
+                /** 排序*/
+                .orderByTaskCreateTime().asc()// 使用创建时间的升序排序
+                /** 返回结果集*/
+                .list();
+//                .singleResult();// 返回唯一结果集
+//                .count();// 返回结果集数量
+//                .listPage(firstResult, maxResult);// 分页查询
+        if(list != null && list.size()>0){
+            for (Task task : list){
+                System.out.println("任务ID:"+task.getId());
+                System.out.println("任务名称:"+task.getName());
+                System.out.println("任务的创建时间:"+task.getCreateTime());
+                System.out.println("任务的办理人:"+task.getAssignee());
+                System.out.println("流程实例ID:"+task.getProcessInstanceId());
+                System.out.println("执行对象ID:"+task.getExecutionId());
+                System.out.println("流程定义ID:"+task.getProcessDefinitionId());
+                System.out.println("###########################################");
+            }
+        }
+    }
+    /** 完成我的任务 */
+    @Test
+    public void completeMyPersonalTask(){
+        String taskId = "c4abe724-4175-11e9-9efe-8cec4b862f6e";
+        taskService.complete(taskId);
+        System.out.println("完成任务：任务ID"+taskId);
+    }
+
+    /** 查询流程状态（判断流程正在执行，还是结束）*/
+    @Test
+    public void isProcessEnd(){
+        String processInstanceId = "a70f1f4b-413c-11e9-ac90-8cec4b862f6e";
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processInstanceId)
+                .singleResult();
+        if (processInstance == null){
+            System.out.println("流程已经结束");
+        }else{
+            System.out.println("流程没有结束");
+        }
+    }
+
+    /** 查询历史任务*/
+    @Test
+    public void findHistoryTask(){
+        String taskAssignee = "张三";
+        List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()// 创建历史任务实例查询
+                .taskAssignee(taskAssignee)// 指定历史任务的办理人
+                .list();
+        if (list != null && list.size()>0){
+            for (HistoricTaskInstance hti : list){
+                System.out.println("任务ID："+hti.getId()+"名称："+hti.getName()
+                        +"流程实例ID:"+hti.getProcessInstanceId()
+                        +"开始时间："+hti.getStartTime()
+                        +"结束时间："+hti.getEndTime()
+                        +"持续时间："+hti.getDurationInMillis());
+                System.out.println("##################################");
+            }
+        }
+    }
+
+    /** 查询历史流程实例*/
+    @Test
+    public void findHistoryProcessInstance(){
+        String processInstanceId = "a70f1f4b-413c-11e9-ac90-8cec4b862f6e";
+        HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()//创建历史流程实例查询
+                .processInstanceId(processInstanceId)
+                .singleResult();
+        System.out.println(hpi.getId()
+                +"  "+hpi.getProcessDefinitionId()
+                +"  "+hpi.getStartTime()
+                +"  "+hpi.getEndTime()
+                +"  "+hpi.getDurationInMillis());
+    }
 
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <script th:src="@{/static/jquery.js}"></script>
+</head>
+<body>
+<div id="image"></div>
+</body>
+<script>
+$.ajax({
+    type:"get",
+    url:"/traceprocess/2679ccbb-43a2-11e9-bc0c-8cec4b862f6e",
+    success:function(data){
+        console.log(data);
+        $("#image").html(data);
+    }
+});
+
+</script>
+</html>
