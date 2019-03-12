@@ -7,16 +7,21 @@
 </head>
 <body>
 <div id="image"></div>
+<input type="text" id="processInstanceId"><button id="getImg">获取流程图</button>
 </body>
 <script>
-$.ajax({
-    type:"get",
-    url:"/traceprocess/2679ccbb-43a2-11e9-bc0c-8cec4b862f6e",
-    success:function(data){
-        console.log(data);
-        $("#image").html(data);
-    }
+
+$("#getImg").click(function(){
+    $.ajax({
+        type:"get",
+        url:"/processImg/"+$("#processInstanceId").val(),
+        success:function(data){
+            console.log(data);
+            $("#image").html(data);
+        }
+    });
 });
+
 
 </script>
 </html>

@@ -67,7 +67,7 @@ public class ProcessVariableTest {
     /** 设置流程变量*/
     @Test
     public void setVariables(){
-        String taskId = "267eaebf-43a2-11e9-bc0c-8cec4b862f6e";
+        String taskId = "70a20f61-43d3-11e9-97af-8cec4b862f6e";
         // 1.设置流程变量，使用基本数据类型
 //        taskService.setVariable(taskId,"请假天数", 3);
 //        taskService.setVariable(taskId, "请假日期", new Date());
@@ -88,7 +88,7 @@ public class ProcessVariableTest {
     /** 获取流程变量*/
     @Test
     public void getVariables(){
-        String taskId = "267eaebf-43a2-11e9-bc0c-8cec4b862f6e";
+        String taskId = "70a20f61-43d3-11e9-97af-8cec4b862f6e";
         // 1.获取流程变量，使用基本数据类型
 //        Integer days = (Integer) taskService.getVariable(taskId,"请假天数");
 //        Date date = (Date) taskService.getVariable(taskId,"请假日期");

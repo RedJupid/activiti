@@ -41,7 +41,6 @@ public class ProcessDefinitionTest {
     @Autowired
     private ProcessDiagramGenerator processDiagramGenerator;
 
-
     /** 历史记录相关服务接口 */
     @Autowired
     private HistoryService historyService;
