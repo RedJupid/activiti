@@ -3,7 +3,12 @@
   <process id="helloworld" isClosed="false" isExecutable="true" name="helloworldProcess" processType="None">
     <startEvent id="_2" name="StartEvent"/>
     <userTask activiti:assignee="张三" activiti:exclusive="true" id="_3" name="提交申请"/>
-    <userTask activiti:assignee="李四" activiti:exclusive="true" id="_4" name="审批【部门经理】"/>
+    <userTask activiti:assignee="李四" activiti:exclusive="true" id="_4" name="审批【部门经理】">
+      <extensionElements>
+        <activiti:taskListener event="create"/>
+        <activiti:taskListener event="create"/>
+      </extensionElements>
+    </userTask>
     <userTask activiti:assignee="王五" activiti:exclusive="true" id="_5" name="审批【总经理】"/>
     <endEvent id="_6" name="EndEvent"/>
     <sequenceFlow id="_7" sourceRef="_2" targetRef="_3"/>

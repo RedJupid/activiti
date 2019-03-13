@@ -129,7 +129,7 @@ public class ProcessDefinitionTest {
         //将图片生成到c盘目录下
         File file = new File("C:/Users/xd/IdeaProjects/activiti/src/main/resources/static/img/"+resourceName);
         //将输入流的图片写到c盘目录下
-        FileUtils.copyInputStreamToFile(in, file);
+//        FileUtils.copyInputStreamToFile(in, file);
     }
 
     /** 附加功能：查询最新版本的流程定义 */

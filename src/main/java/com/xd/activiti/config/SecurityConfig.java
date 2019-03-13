@@ -9,7 +9,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll().and().logout().permitAll();
+
+        http.httpBasic().disable();
+//        http.authorizeRequests().anyRequest().permitAll().and().logout().permitAll();
 
         http.headers().frameOptions().sameOrigin();
         http.csrf().disable();
